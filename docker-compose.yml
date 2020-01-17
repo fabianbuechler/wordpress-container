@@ -2,45 +2,42 @@ version: '3.7'
 
 services:
 
-  wordpress:
-    image: wordpress-local
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wp
-      WORDPRESS_DB_PASSWORD: pass
-      WORDPRESS_DB_NAME: wordpress
-    volumes:
-      - wordpress:/var/www/html
+  # wordpress:
+  #   image: wordpress-local
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.wordpress
+  #   restart: always
+  #   ports:
+  #     - 8080:80
+  #   environment:
+  #     WORDPRESS_DB_HOST: db
+  #     WORDPRESS_DB_USER: wp
+  #     WORDPRESS_DB_PASSWORD: wp
+  #     WORDPRESS_DB_NAME: wp
+  #   volumes:
+  #     - wordpress:/var/www/html
 
   db:
-    image: mysql:5.7
-    # image: mysql-local
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile.mysql
+    image: mariadb-local
+    build:
+      context: .
+      dockerfile: Dockerfile.mariadb
     restart: always
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wp
-      MYSQL_PASSWORD: pass
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - db_dump:/docker-entrypoint-initdb.d
-      - db:/var/lib/mysql
+    # environment:
+    #   MYSQL_DATABASE: wp
+    #   MYSQL_USER: wp
+    #   MYSQL_PASSWORD: wp
+    #   MYSQL_ROOT_PASSWORD: root
+    # volumes:
+    #   - ./db_dump/:/docker-entrypoint-initdb.d/
+    #   - db/:/var/lib/mysql/
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8081:8080
 
-volumes:
-  wordpress:
-  db:
-  db_dump:
+# volumes:
+#   db:
