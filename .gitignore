@@ -1,5 +1,2 @@
-/data/db/*
-/data/others/*
-/data/plugins/*
-/data/themes/*
-/data/uploads/*
+/data/db-backup/*
+/data/wp-content/*
