@@ -1,5 +1,5 @@
 /data/db-backup/*
 /data/wp-content/*
 /id_ed25519*
-/hosting.env
+/.env
 /mysql.cnf

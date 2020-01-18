@@ -59,13 +59,13 @@ the public key to the hosting server.
 
 ### Configure environment for Backup Sync Script
 
-1.  Create a file `hosting.env` in this directory, that contains SSH host and
+1.  Create a file `.env` in this directory, that contains SSH host and
     user, Wordpress installation directory and MySQL database like:
 
     ```ini
     SSH_HOST=e12345-ssh.services.easyname.eu
     SSH_USER=e12345
-    WP_DIR=/data/web/e12345/html/apps/wordpress-54321
+    WORDPRESS_DIR=/data/web/e12345/html/apps/wordpress-54321
     MYSQL_DATABASE=u987654
     ```
 

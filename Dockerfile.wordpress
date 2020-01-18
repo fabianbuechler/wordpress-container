@@ -1,4 +1,4 @@
-FROM wordpress:php7.3-apache
+FROM wordpress:5.3.2-php7.3-apache
 
 VOLUME ["/var/www/html/wp-content"]
 COPY data/wp-content/* /var/www/html/wp-content/
