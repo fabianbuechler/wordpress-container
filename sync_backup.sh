@@ -1,23 +1,44 @@
 #!/usr/bin/env bash
-set -exa
+set -ae
 
-HOST=e15756@e15756-ssh.services.easyname.eu
-WP_DIR=/data/web/e15756/html/apps/wordpress-97153
-MYSQL_DATABASE=u8342db205
-MYSQL_USER=u8342db205
+source ./hosting.env
 
 # Sync all wordpress content files in wp-content/
+echo ""
+echo ""
+echo ">>> Synchronize wp-content/ directory"
 rsync --recursive --links --times --devices --specials --delete --progress \
-    ${HOST}:${WP_DIR}/wp-content/* \
+    ${SSH_USER}@${SSH_HOST}:${WP_DIR}/wp-content/* \
     data/wp-content/
+echo "Done"
+
+# Configure database access for mysqldump
+echo ""
+echo ""
+echo ">>> Configure DB access"
+MYSQL_DEFAULTS_FILE=${WP_DIR}/db-backup/mysql.cnf
+scp mysql.cnf ${SSH_USER}@${SSH_HOST}:${WP_DIR}/db-backup/mysql.cnf
+echo "Done"
 
 # Dump wordpress database from mariadb
-ssh ${HOST} \
+echo ""
+echo ""
+echo ">>> Create database dump"
+ssh ${SSH_USER}@${SSH_HOST} \
     "mkdir -p ${WP_DIR}/db-backup/"
-ssh ${HOST} \
-    "mysqldump -p -u ${MYSQL_USER} ${MYSQL_DATABASE} > ${WP_DIR}/db-backup/backup_$(date -I).sql"
+ssh ${SSH_USER}@${SSH_HOST} \
+    "mysqldump --defaults-file=${MYSQL_DEFAULTS_FILE} ${MYSQL_DATABASE} > ${WP_DIR}/db-backup/backup_$(date -I).sql && rm ${MYSQL_DEFAULTS_FILE}"
+echo "Done"
 
 # Sync database backup
+echo ""
+echo ""
+echo ">>> Synchronize db-backup/ directory"
 rsync --recursive --links --times --devices --specials --delete --progress \
-    ${HOST}:${WP_DIR}/db-backup/* \
+    ${SSH_USER}@${SSH_HOST}:${WP_DIR}/db-backup/* \
     data/db-backup/
+echo "Done"
+
+echo ""
+echo ""
+echo ">>> Finished"
