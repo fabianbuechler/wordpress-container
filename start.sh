@@ -2,8 +2,8 @@
 set -ae
 
 function cleanup {
-  docker-compose down --rmi all
+  docker-compose down
 }
 trap cleanup EXIT
 
-docker-compose up --build
+docker-compose up
