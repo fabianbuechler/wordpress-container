@@ -4,8 +4,6 @@ set -ae
 source ./hosting.env
 
 # Sync all wordpress content files in wp-content/
-echo ""
-echo ""
 echo ">>> Synchronize wp-content/ directory"
 rsync --recursive --links --times --devices --specials --delete --progress \
     ${SSH_USER}@${SSH_HOST}:${WP_DIR}/wp-content/* \
@@ -13,16 +11,12 @@ rsync --recursive --links --times --devices --specials --delete --progress \
 echo "Done"
 
 # Configure database access for mysqldump
-echo ""
-echo ""
 echo ">>> Configure DB access"
 MYSQL_DEFAULTS_FILE=${WP_DIR}/db-backup/mysql.cnf
 scp mysql.cnf ${SSH_USER}@${SSH_HOST}:${WP_DIR}/db-backup/mysql.cnf
 echo "Done"
 
 # Dump wordpress database from mariadb
-echo ""
-echo ""
 echo ">>> Create database dump"
 ssh ${SSH_USER}@${SSH_HOST} \
     "mkdir -p ${WP_DIR}/db-backup/"
@@ -31,14 +25,10 @@ ssh ${SSH_USER}@${SSH_HOST} \
 echo "Done"
 
 # Sync database backup
-echo ""
-echo ""
 echo ">>> Synchronize db-backup/ directory"
 rsync --recursive --links --times --devices --specials --delete --progress \
     ${SSH_USER}@${SSH_HOST}:${WP_DIR}/db-backup/* \
     data/db-backup/
 echo "Done"
 
-echo ""
-echo ""
 echo ">>> Finished"
