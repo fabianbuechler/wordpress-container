@@ -2,18 +2,13 @@
 
 ## How to use
 
-- `sync_backup.sh`
+- `backup.sh`
 
   Backup Wordpress content and database from easyname and synchronize it with
   `data/wp-content/` and `data/db-backup/` directories.
 
-  In order for `sync_backup.sh` to work, please configure authentication with
+  In order for `backup.sh` to work, please configure authentication with
   the easyname hosting server as described below.
-
-- `build.sh`
-
-  Build Docker images from Wordpress and database backups.
-  This should be done every time a new backup has been downloaded.
 
 - `start.sh`
   Run the Wordpress and database containers.
@@ -21,11 +16,14 @@
   - Wordpress: http://localhost:8080/
   - Wordpress admin: http://localhost:8080/wp-admin/
 
+- `stop.sh`
+  Stop and clean up the containers.
+
 ## Configure Authentication with easyname Hosting
 
 ### Enable SSH Access to easyname hosting
 
-In order for `sync_backup.sh` to be able to connect to the hosting server,
+In order for `backup.sh` to be able to connect to the hosting server,
 configure SSH access.
 
 1.  Log in to the easyname controlpanel at:

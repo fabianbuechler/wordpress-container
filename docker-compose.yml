@@ -3,11 +3,14 @@ version: '3.7'
 services:
 
   wordpress:
-    image: wordpress-local
-    build:
-      context: .
-      dockerfile: Dockerfile.wordpress
+    image: wordpress:5.3.2-php7.3-apache
+    # image: wordpress-local
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.wordpress
     restart: always
+    volumes:
+      - ./data/wp-content/:/var/www/html/wp-content/
     ports:
       - 8080:80
     environment:
@@ -21,11 +24,14 @@ services:
       - db
 
   db:
-    image: mariadb-local
-    build:
-      context: .
-      dockerfile: Dockerfile.mariadb
+    image: mariadb:10.1
+    # image: mariadb-local
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.mariadb
     restart: always
+    volumes:
+      - ./data/db-backup/:/docker-entrypoint-initdb.d/
     environment:
       MYSQL_DATABASE: wp
       MYSQL_USER: wp

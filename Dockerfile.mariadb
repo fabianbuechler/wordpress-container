@@ -1,4 +1,0 @@
-FROM mariadb:10.1
-
-VOLUME ["/docker-entrypoint-initdb.d"]
-COPY data/db-backup/*.sql /docker-entrypoint-initdb.d/
