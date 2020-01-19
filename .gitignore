@@ -1,5 +1,7 @@
 /data/db-backup/*
+!/data/db-backup/.keep
 /data/wp-content/*
+!/data/wp-content/.keep
 /id_ed25519*
 /.env
 /mysql.cnf
