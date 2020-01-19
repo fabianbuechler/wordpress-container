@@ -77,6 +77,7 @@ the public key to the hosting server.
     SSH_HOST=e12345-ssh.services.easyname.eu
     SSH_USER=e12345
     WORDPRESS_DIR=/data/web/e12345/html/apps/wordpress-54321
+    WORDPRESS_TABLE_PREFIX=abcd_
     MYSQL_DATABASE=u987654
     ```
 
