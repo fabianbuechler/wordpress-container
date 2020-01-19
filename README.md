@@ -19,6 +19,8 @@
 - `stop.sh`
   Stop and clean up the containers.
 
+Remember to load your SSH key as configured below using `ssh-add`.
+
 ## Configure Authentication with easyname Hosting
 
 ### Enable SSH Access to easyname hosting
@@ -49,6 +51,7 @@ the public key to the hosting server.
 2.  Load the SSH key into your key agent:
 
     ```bash
+    eval `ssh-agent -s`
     ssh-add ./id_ed25519
     # Enter the password you chose before
     ```
@@ -56,6 +59,7 @@ the public key to the hosting server.
 3.  Upload the public key to your easyname host:
 
     ```bash
+    # starting ssh-agent is only required once
     ssh-copy-id -i ./id_ed25519 user@host
     # Will ask for the SSH password configured before
     ```
