@@ -72,7 +72,7 @@ the public key to the hosting server.
     {SSH_USER}:~$
     ```
 
-### Configure environment for Backup Sync Script
+## Configure environment for Backup Sync Script
 
 1.  Create a file `.env` in this directory, that contains SSH host and
     user, Wordpress installation directory and MySQL database like:
@@ -93,3 +93,7 @@ the public key to the hosting server.
     user=u987654
     password=abcdefgh
     ```
+
+## Configuration for Windows
+
+See [how to use on Windows](./windows.md).
