@@ -32,4 +32,6 @@ using `pacman`.
 
 6.  Run the docker installer.
 
-7.  Open a fresh msys shell try `./backup.sh` and `./start.sh` to verify.
+8.  Now follow the [other setup steps](../README.md) and then ...
+
+9.  Open a fresh msys shell try `./backup.sh` and `./start.sh` to verify.

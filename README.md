@@ -1,81 +1,66 @@
-# Wordpress Container from easyname Hosting Backup
+# Wordpress Container from Hosting Backup
 
 ## How to use
 
-- `backup.sh`
+### `backup.sh`
 
-  Backup Wordpress content and database from easyname and synchronize it with
-  `data/wp-content/` and `data/db-backup/` directories.
+Backup Wordpress content and database from hosting and synchronize it with
+`data/wp-content/` and `data/db-backup/` directories.
 
-  In order for `backup.sh` to work, please configure authentication with
-  the easyname hosting server as described below.
+In order for `backup.sh` to work, please configure authentication with
+the hosting server as described below.
 
-- `start.sh`
-  Run the Wordpress and database containers.
+Remember to load your SSH key [as configured](./docs/auth.md) using
+`ssh-add ./id_ed25519`.
 
-  - Wordpress: http://localhost:8080/
-  - Wordpress admin: http://localhost:8080/wp-admin/
+### `start.sh`
 
-- `stop.sh`
-  Stop and clean up the containers.
+Run the Wordpress and database containers.
 
-Remember to load your SSH key as configured below using `ssh-add`.
+- Wordpress: http://localhost:8080/
+- Wordpress admin: http://localhost:8080/wp-admin/
 
-## Configure Authentication with easyname Hosting
+### `stop.sh`
 
-### Enable SSH Access to easyname hosting
+Stop and clean up the containers.
 
-In order for `backup.sh` to be able to connect to the hosting server,
-configure SSH access.
 
-1.  Log in to the easyname controlpanel at:
-    https://my.easyname.at/de/hosting/ssh
+## Configuration
 
-2.  Configure an SSH access password ("SSH Zugang") and note hostname,
-    username and password, refered to later as `{SSH_HOST}`, `{SSH_USER}` and
-    `{SSH_PASSWORD}`.
+The scripts are configured via an environment file `.env`.
 
-### Enable SSH authentication with keys:
+1.  If you want to use this on Windows, follow the
+    [how to use on Windows](./docs/windows.md) guide
 
-For a more secure connection without the need to enter the SSH password multiple
-times during each backup sync, you need to generate a SSH key pair and upload
-the public key to the hosting server.
-
-1.  Create an SSH key pair:
+2.  Clone this repository to any directory on your system:
 
     ```bash
-    ssh-keygen -t ed25519 -b 4096 -C "your@email.com" -f ./id_ed25519
-    # Then choose a password for the key
+    # If you want the repository to be cloned to ~/Code/wordpress-container
+    mkdir ~/Code
+    cd Code
+    git clone https://github.com/fabianbuechler/wordpress-container.git
+    cd wordpress-container
     ```
 
-2.  Load the SSH key into your key agent:
+3.  [Configure authentication with your hosting](./docs/auth.md) for backup
+    script.
 
-    ```bash
-    eval `ssh-agent -s`
-    ssh-add ./id_ed25519
-    # Enter the password you chose before
+4.  Configuring Server and Wordpress Versions
+
+    To configure versions of Wordpress, PHP and MariaDB used in Docker images,
+    set the three respective `VERSION_*` variables in the `.env` file (in this
+    directory):
+
+    ```ini
+    VERSION_WORDPRESS=5.3.2
+    VERSION_PHP=7.3
+    VERSION_MARIADB=10.1
     ```
 
-3.  Upload the public key to your easyname host:
+5.  Configure environment for Backup Sync Script
 
-    ```bash
-    # starting ssh-agent is only required once
-    ssh-copy-id -i ./id_ed25519 user@host
-    # Will ask for the SSH password configured before
-    ```
-
-4.  Ensure SSH access works by logging in:
-
-    ```bash
-    ssh user@host
-    # This should display the remote shell prompt, like
-    {SSH_USER}:~$
-    ```
-
-## Configure environment for Backup Sync Script
-
-1.  Create a file `.env` in this directory, that contains SSH host and
-    user, Wordpress installation directory and MySQL database like:
+    In the `.env` file in this directory, add variables for SSH host and user,
+    Wordpress installation directory and MySQL database like:
 
     ```ini
     SSH_HOST=e12345-ssh.services.easyname.eu
@@ -85,7 +70,7 @@ the public key to the hosting server.
     MYSQL_DATABASE=u987654
     ```
 
-2.  Create a file `mysql.cnf` in this directory, that contains the MySQL
+    Also, create a file `mysql.cnf` in this directory, that contains the MySQL
     database user and password like:
 
     ```ini
@@ -93,7 +78,3 @@ the public key to the hosting server.
     user=u987654
     password=abcdefgh
     ```
-
-## Configuration for Windows
-
-See [how to use on Windows](./windows.md).
