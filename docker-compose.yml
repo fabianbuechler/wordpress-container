@@ -4,7 +4,7 @@ services:
 
   wordpress:
     image: wordpress:${VERSION_WORDPRESS}-php${VERSION_PHP}-apache
-    restart: always
+    restart: on-failure
     volumes:
       - ./data/wp-content/:/var/www/html/wp-content/
     ports:
@@ -21,7 +21,7 @@ services:
 
   db:
     image: mariadb:${VERSION_MARIADB}
-    restart: always
+    restart: on-failure
     volumes:
       - ./data/db-backup/:/docker-entrypoint-initdb.d/
     environment:
