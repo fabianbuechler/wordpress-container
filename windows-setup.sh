@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-pacman -S openssh rsync git python
-python -m ensurepip
-python -m pip install pip-tools
-python -m piptools sync
+python -m venv .venv
+. .venv/bin/activate
+pip install pip-tools
+pip-sync

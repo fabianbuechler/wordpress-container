@@ -30,12 +30,12 @@ using `pacman`.
 6.  Now you can clone this repository and install script requirements:
 
     ```bash
-    cd ~/path/where/this/should/be/cloned
+    # If you want the repository to be cloned to ~/git/wordpress-container
+    mkdir ~/git
+    cd git
     git clone https://github.com/fabianbuechler/wordpress-container.git
     cd wordpress-container
-    python -m ensurepip
-    python -m pip install pip-tools
-    python -m piptools sync
+    ./windows-setup.sh
     ```
 
 6.  Then, follow the instructions in README to configure SSH access.

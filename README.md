@@ -32,14 +32,18 @@ The scripts are configured via an environment file `.env`.
 1.  If you want to use this on Windows, follow the
     [how to use on Windows](./docs/windows.md) guide
 
-2.  Clone this repository to any directory on your system:
+2.  Clone this repository to any directory on your system, and install script
+    requirements into a virtualenv:
 
     ```bash
-    # If you want the repository to be cloned to ~/Code/wordpress-container
-    mkdir ~/Code
-    cd Code
+    # If you want the repository to be cloned to ~/git/wordpress-container
+    mkdir ~/git
+    cd git
     git clone https://github.com/fabianbuechler/wordpress-container.git
     cd wordpress-container
+    mkvirtualenv -p python3 wpc
+    (wpc) pip install pip-tools
+    (wpc) pip-tools sync
     ```
 
 3.  [Configure authentication with your hosting](./docs/auth.md) for backup
