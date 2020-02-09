@@ -1,5 +1,9 @@
 # Wordpress Container from Hosting Backup
 
+This starts a local copy of your Wordpress + MySQL/MariaDB instance in Docker
+containers from a backup synchronized efficiently from your shared hosting
+server.
+
 ## How to use
 
 ### `backup.sh`
@@ -15,14 +19,14 @@ Remember to load your SSH key [as configured](./docs/auth.md) using
 
 ### `start.sh`
 
-Run the Wordpress and database containers.
+Once an up-to-date backup has been synchronized, run the Wordpress and database containers.
 
 - Wordpress: http://localhost:8080/
 - Wordpress admin: http://localhost:8080/wp-admin/
 
 ### `stop.sh`
 
-Stop and clean up the containers.
+Stop and clean up the containers when you're done.
 
 
 ## Configuration
@@ -30,7 +34,10 @@ Stop and clean up the containers.
 The scripts are configured via an environment file `.env`.
 
 1.  If you want to use this on Windows, follow the
-    [how to use on Windows](./docs/windows.md) guide
+    [how to use on Windows](./docs/windows.md) guide.
+
+    If you run this on Linux, we'll just assume you've got git and docker
+    installed.
 
 2.  Clone this repository to any directory on your system:
 

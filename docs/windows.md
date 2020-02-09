@@ -23,15 +23,13 @@ using `pacman`.
     pacman -S git
     ```
 
-4.  Now you can clone this repository and follow the instructions in README to
-    configure SSH access.
+4.  Now you can follow the instructions in [README](../README.md) from step 2
+    to clone this repository and configure SSH access.
 
 5.  Download Docker for Windows from https://hub.docker.com/?overlay=onboarding
 
     You'll need to sign up for an account at hub.docker.com first.
 
 6.  Run the docker installer.
-
-8.  Now follow the [other setup steps](../README.md) and then ...
 
 9.  Open a fresh msys shell try `./backup.sh` and `./start.sh` to verify.
