@@ -1,34 +1,35 @@
 #!/usr/bin/env bash
-set -ae
+set -e
 
 source ./.env
-
-# Sync all wordpress content files in wp-content/
-echo ">>> Synchronize wp-content/ directory"
-rsync --recursive --links --times --devices --specials --delete --progress \
-    ${SSH_USER}@${SSH_HOST}:${WORDPRESS_DIR}/wp-content/* \
-    data/wp-content/
-echo "Done"
+source ./util.sh
 
 # Configure database access for mysqldump
-echo ">>> Configure DB access"
+banner "Configure DB access"
 MYSQL_DEFAULTS_FILE=${WORDPRESS_DIR}/db-backup/mysql.cnf
-scp mysql.cnf ${SSH_USER}@${SSH_HOST}:${WORDPRESS_DIR}/db-backup/mysql.cnf
-echo "Done"
+rsync mysql.cnf ${SSH_USER}@${SSH_HOST}:${WORDPRESS_DIR}/db-backup/
+echo "  Done"
 
 # Dump wordpress database from mariadb
-echo ">>> Create database dump"
+banner "Create database dump"
 ssh ${SSH_USER}@${SSH_HOST} \
     "mkdir -p ${WORDPRESS_DIR}/db-backup/"
 ssh ${SSH_USER}@${SSH_HOST} \
     "mysqldump --defaults-file=${MYSQL_DEFAULTS_FILE} ${MYSQL_DATABASE} > ${WORDPRESS_DIR}/db-backup/backup_${MYSQL_DATABASE}.sql && rm ${MYSQL_DEFAULTS_FILE}"
-echo "Done"
+echo "  Done"
+
+# Sync all wordpress content files in wp-content/
+banner "Synchronize wp-content/ directory"
+rsync --recursive --links --times --devices --specials --delete --progress \
+    ${SSH_USER}@${SSH_HOST}:${WORDPRESS_DIR}/wp-content/ \
+    data/wp-content/
+echo "  Done"
 
 # Sync database backup
-echo ">>> Synchronize db-backup/ directory"
+banner "Synchronize db-backup/ directory"
 rsync --recursive --links --times --devices --specials --delete --progress \
-    ${SSH_USER}@${SSH_HOST}:${WORDPRESS_DIR}/db-backup/* \
+    ${SSH_USER}@${SSH_HOST}:${WORDPRESS_DIR}/db-backup/ \
     data/db-backup/
-echo "Done"
+echo "  Done"
 
-echo ">>> Finished"
+banner "Finished"
