@@ -6,9 +6,9 @@ source ./util.sh
 
 banner "Starting DB container"
 docker-compose -p wpc up --detach db 2>/dev/null
-progress_bar 30 1 \
-    'docker-compose -p wpc logs db | grep -q "ready for connections"'
-
+banner "Importing DB backup"
+progress_bar 60 2 \
+    'docker-compose -p wpc logs db | grep -Pzq "(?s)init process done.+ready for connections"'
 
 banner "Starting Wordpress container"
 docker-compose -p wpc up --detach wordpress 2>/dev/null
